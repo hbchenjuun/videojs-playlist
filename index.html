@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+    <title>HTML5 Video Player</title>
+    <link href="css/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/videojs-playlist-ui.css" />
+    <script src="js/videojs/video.js"></script>
+	<script src="js/videojs-playlist/videojs-playlist.js"></script>
+	<script src="js/videojs-flash/videojs-flash.js" ></script>
+	<script type="text/javascript" src="js/videojs-playlist/videojs-playlist-ui.js" ></script>
+	<script src="lang/zh-CN.js"></script>
+    <style>
+    	/*暂停时显示播放按钮*/
+    	.vjs-paused .vjs-big-play-button,.vjs-paused.vjs-has-started .vjs-big-play-button {
+		    display: block;
+		}
+		
+		/*****START 播放按钮变○圆形 START*****/
+		.video-js .vjs-big-play-button{
+		    font-size: 2.5em;
+		    line-height: 2.3em;
+		    height: 2.5em;
+		    width: 2.5em;
+		    -webkit-border-radius: 2.5em;
+		    -moz-border-radius: 2.5em;
+		    border-radius: 2.5em;
+		    background-color: #73859f;
+		    background-color: rgba(115,133,159,.5);
+		    border-width: 0.15em;
+		    margin-top: -1.25em;
+		    margin-left: -1.75em;
+		}
+		/* 中间的播放箭头 */
+		.vjs-big-play-button .vjs-icon-placeholder {
+		    font-size: 1.63em;
+		}
+		/* 加载圆圈 */
+		.vjs-loading-spinner {
+		    font-size: 2.5em;
+		    width: 2em;
+		    height: 2em;
+		    border-radius: 1em;
+		    margin-top: -1em;
+		    margin-left: -1.5em;
+		}
+		
+		
+  </style>
+  <style>
+  	.player-container{
+	    background: #1a1a1a;
+    	overflow: auto;
+  	}
+  	.video-js{
+  		float:left;
+  		width: 70% !important;
+  		height: 720px;
+  	}
+  	.vjs-playlist{
+  		float:left;
+  		width: 30%;
+  		height: 720px;
+  	}
+  	.vjs-playlist-item{
+  		border: 1px solid #FFFFFF;
+  	}
+  	.vjs-playlist .vjs-selected{
+  		border: 1px solid #00FF00;
+  	}
+  	.vjs-playlist .vjs-selected img{
+  		opacity: .5;
+  	}
+  </style>
+   <script type="text/javascript">
+   		videojs.options.flash.swf = "js/videojs-flash/video-js.swf";//flash路径，有一些html播放不了的视频，就需要用到flash播放。这一句话要加在在videojs.js引入之后使用
+   </script>
+</head>
+<!--
+	作者：450695461@qq.com
+	时间：2019-05-27
+	描述：一些关键字段的补充说明
+	1、默认的播放按钮在左上角，在video标签中增加 vjs-big-play-centered 类，即可居中
+	2、禁止在iPhone safari中自动全屏：playsinline参数。注意，在iOS10之前用的是webkit-playsinline。
+	3、播放格式优先级：{"techOrder": ["html5", "flash"]}
+-->
+<body>
+	<div class="player-container">
+		<video id="example" class="video-js vjs-default-skin vjs-big-play-centered vjs-v7 vjs-user-active" playsinline webkit-playsinline controls preload="auto" width="100%" height="100%" 
+	  		data-setup='{"techOrder": ["html5","flash"]}'>
+		</video>
+		 <div class="vjs-playlist playlist-container">
+	      <!--
+	        The contents of this element will be filled based on the
+	        currently loaded playlist
+	      -->
+	    </div>
+    </div>
+</body>
+<script type="text/javascript">
+	var player = videojs('example');
+ 
+	player.playlist([{
+	  name:'trailer',//视频标题
+	  description:'Explore the depths of our planet\'s oceans.',//视频描述
+	  duration:52,//视频总时长，单位秒(s)
+	  sources: [{//视频资源地址以及视频的MIME类型
+	    src: 'http://media.w3.org/2010/05/sintel/trailer.mp4',
+	    type: 'video/mp4'
+	  }],
+	  //视频封面地址
+	  poster:'http://media.w3.org/2010/05/sintel/poster.png',
+	  //右侧视频播放列表的图片
+	  thumbnail: [
+	  	{//默认图片
+          srcset: 'test/example/oceans.jpg',
+          type: 'image/jpeg',
+          media: '(min-width: 400px;)'
+        },
+	  	{//实际视频缩略图图片
+	  		src:'http://media.w3.org/2010/05/sintel/poster.png'
+	  	}
+  	  ]
+	}, {
+	  name:'tears-of-steel',//视频标题
+	  description:'Explore the depths of our planet\'s oceans.',//视频描述
+	  duration:734,//视频总时长，单位秒(s)
+	  sources: [{//视频资源地址以及视频的MIME类型
+	    src: 'http://d2zihajmogu5jn.cloudfront.net/tears-of-steel/playlist.m3u8',
+	    type: 'application/x-mpegurl'
+	  }],
+	  //视频封面地址
+	  poster:'http://d2zihajmogu5jn.cloudfront.net/tears-of-steel/tears_of_steel.jpg',
+	  
+	  thumbnail: [
+	  	{//默认图片
+          srcset: 'img/jinjihu.jpg',
+          type: 'image/jpeg',
+          media: '(min-width: 400px;)'
+        },
+	  	{//实际视频缩略图图片
+	  		src:'http://d2zihajmogu5jn.cloudfront.net/tears-of-steel/tears_of_steel.jpg'
+	  	}
+  	  ]
+	}, {
+	  description:'Explore the depths of our planet\'s oceans.',
+	  sources: [{
+	    src: 'rtmp://media3.sinovision.net:1935/live/livestream',
+	    type: 'rtmp/flv'
+	  }],
+	  poster:'img/jinjihu.jpg',
+	  thumbnail: [
+	  	{
+          srcset: 'img/jinjihu.jpg',
+          type: 'image/jpeg',
+          media: '(min-width: 400px;)'
+        }
+  	  ]
+	}, {
+	  name:'movie',
+	  description:'Explore the depths of our planet\'s oceans.',
+	  duration:596,
+	  sources: [{
+	    src: 'http://media.w3.org/2010/05/bunny/movie.mp4',
+	    type: 'video/mp4'
+	  }],
+	  poster:'http://media.w3.org/2010/05/bunny/poster.png',
+	  thumbnail: [
+	  	{
+          srcset: 'test/example/oceans.jpg',
+          type: 'image/jpeg',
+          media: '(min-width: 400px;)'
+        },
+	  	{
+	  		src:'http://media.w3.org/2010/05/bunny/poster.png'
+	  	}
+  	  ]
+	}]);
+	 
+	player.playlistUi();
+</script>
+</html>
