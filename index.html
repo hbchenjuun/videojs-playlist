@@ -86,7 +86,7 @@
 -->
 <body>
 	<div class="player-container">
-		<video id="example" class="video-js vjs-default-skin vjs-big-play-centered vjs-v7 vjs-user-active" playsinline webkit-playsinline controls preload="auto" width="100%" height="100%" 
+		<video id="example" class="video-js vjs-default-skin vjs-big-play-centered vjs-v7 vjs-user-active" playsinline webkit-playsinline autoplay controls preload="auto" width="100%" height="100%" 
 	  		data-setup='{"techOrder": ["html5","flash"]}'>
 		</video>
 		 <div class="vjs-playlist playlist-container">
@@ -178,5 +178,6 @@
 	}]);
 	 
 	player.playlistUi();
+	player.playlist.autoadvance(0);
 </script>
 </html>
